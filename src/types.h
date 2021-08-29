@@ -416,6 +416,15 @@ static Image *jaylib_getimage(const Janet *argv, int32_t n) {
     return ((Image *)janet_getabstract(argv, n, &AT_Image));
 }
 
+static const JanetAbstractType AT_Shader = {
+    "jaylib/shader",
+    JANET_ATEND_NAME
+};
+
+static Shader *jaylib_getshader(const Janet *argv, int32_t n) {
+    return ((Shader *)janet_getabstract(argv, n, &AT_Shader));
+}
+
 static const JanetAbstractType AT_Wave = {
     "jaylib/wave",
     JANET_ATEND_NAME
