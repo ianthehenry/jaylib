@@ -860,6 +860,20 @@ static Janet cfun_SetCameraMoveControls(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_GetWorldToScreen2D(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Vector2 vec = jaylib_getvec2(argv, 0);
+    Camera2D *camera = jaylib_getcamera2d(argv, 1);
+    return jaylib_wrap_vec2(GetWorldToScreen2D(vec, *camera));
+}
+
+static Janet cfun_GetScreenToWorld2D(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Vector2 vec = jaylib_getvec2(argv, 0);
+    Camera2D *camera = jaylib_getcamera2d(argv, 1);
+    return jaylib_wrap_vec2(GetScreenToWorld2D(vec, *camera));
+}
+
 static JanetReg core_cfuns[] = {
     {"init-window", cfun_InitWindow, NULL},
     {"window-should-close", cfun_WindowShouldClose, NULL},
@@ -954,5 +968,7 @@ static JanetReg core_cfuns[] = {
     {"set-camera-alt-control", cfun_SetCameraAltControl, NULL},
     {"set-camera-smooth-zoom-control", cfun_SetCameraSmoothZoomControl, NULL},
     {"set-camera-move-controls", cfun_SetCameraMoveControls, NULL},
+    {"get-world-to-screen-2d", cfun_GetWorldToScreen2D, NULL},
+    {"get-screen-to-world-2d", cfun_GetScreenToWorld2D, NULL},
     {NULL, NULL, NULL}
 };
