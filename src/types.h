@@ -397,6 +397,30 @@ static Janet jaylib_wrap_vec2(Vector2 x) {
     return janet_wrap_tuple(janet_tuple_end(tup));
 }
 
+static Janet jaylib_wrap_vec3(Vector3 x) {
+    Janet *tup = janet_tuple_begin(3);
+    tup[0] = janet_wrap_number(x.x);
+    tup[1] = janet_wrap_number(x.y);
+    tup[2] = janet_wrap_number(x.z);
+    return janet_wrap_tuple(janet_tuple_end(tup));
+}
+
+static Janet jaylib_wrap_color(Color color) {
+    Janet *tup;
+    if (color.a == 255) {
+        tup = janet_tuple_begin(3);
+    } else {
+        tup = janet_tuple_begin(4);
+    }
+    tup[0] = janet_wrap_number((float) color.r / 255.0);
+    tup[1] = janet_wrap_number((float) color.g / 255.0);
+    tup[2] = janet_wrap_number((float) color.b / 255.0);
+    if (color.a != 255) {
+      tup[3] = janet_wrap_number((float) color.a / 255.0);
+    }
+    return janet_wrap_tuple(janet_tuple_end(tup));
+}
+
 static const JanetAbstractType AT_TextureCubemap = {
     "jaylib/texture-cubemap",
     JANET_ATEND_NAME
