@@ -62,8 +62,8 @@
 // Color-related functions
 [ ] int ColorToInt(Color color)
 [ ] Vector4 ColorNormalize(Color color)
-[ ] Vector3 ColorToHSV(Color color)
-[ ] Color ColorFromHSV(Vector3 hsv)
+[x] Vector3 ColorToHSV(Color color)
+[x] Color ColorFromHSV(Vector3 hsv)
 [ ] Color GetColor(int hexValue)
 [ ] Color Fade(Color color, float alpha)
 
