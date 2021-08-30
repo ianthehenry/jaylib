@@ -875,6 +875,13 @@ static Janet cfun_GetScreenToWorld2D(int32_t argc, Janet *argv) {
     return jaylib_wrap_vec2(GetScreenToWorld2D(vec, *camera));
 }
 
+static Janet cfun_SetCamera2DTarget(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Camera2D *camera = jaylib_getcamera2d(argv, 0);
+    camera->target = jaylib_getvec2(argv, 1);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_ColorFromHSV(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 3);
     float h = (float) janet_getnumber(argv, 0);
@@ -985,6 +992,7 @@ static JanetReg core_cfuns[] = {
     {"set-camera-move-controls", cfun_SetCameraMoveControls, NULL},
     {"get-world-to-screen-2d", cfun_GetWorldToScreen2D, NULL},
     {"get-screen-to-world-2d", cfun_GetScreenToWorld2D, NULL},
+    {"set-camera2d-target", cfun_SetCamera2DTarget, NULL},
     {"color-from-hsv", cfun_ColorFromHSV, NULL},
     {"color-to-hsv", cfun_ColorToHSV, NULL},
     {NULL, NULL, NULL}
