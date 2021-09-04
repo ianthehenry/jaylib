@@ -65,7 +65,7 @@
 [x] Vector3 ColorToHSV(Color color)
 [x] Color ColorFromHSV(Vector3 hsv)
 [ ] Color GetColor(int hexValue)
-[ ] Color Fade(Color color, float alpha)
+[x] Color Fade(Color color, float alpha)
 
 // Misc. functions
 [x] void SetConfigFlags(unsigned int flags)
