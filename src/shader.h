@@ -38,10 +38,21 @@ static Janet cfun_EndShaderMode(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_SetShaderValueTexture(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Shader shader = *jaylib_getshader(argv, 0);
+    const char *uniform = janet_getcstring(argv, 1);
+    int location = GetShaderLocation(shader, uniform);
+    Texture2D *texture = jaylib_gettexture2d(argv, 2);
+    SetShaderValueTexture(shader, location, *texture);
+    return janet_wrap_nil();
+}
+
 static const JanetReg shader_cfuns[] = {
     {"load-shader", cfun_LoadShader, NULL},
     {"unload-shader", cfun_UnloadShader, NULL},
     {"begin-shader-mode", cfun_BeginShaderMode, NULL},
     {"end-shader-mode", cfun_EndShaderMode, NULL},
+    {"set-shader-value-texture", cfun_SetShaderValueTexture, NULL},
     {NULL, NULL, NULL}
 };
