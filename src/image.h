@@ -456,6 +456,19 @@ static Janet cfun_DrawTextureRec(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_DrawTextureTiled(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 7);
+    Texture2D texture = *jaylib_gettexture2d(argv, 0);
+    Rectangle source = jaylib_getrect(argv, 1);
+    Rectangle dest = jaylib_getrect(argv, 2);
+    Vector2 origin = jaylib_getvec2(argv, 3);
+    float rotation = janet_getnumber(argv, 4);
+    float scale = janet_getnumber(argv, 5);
+    Color tint = jaylib_getcolor(argv, 6);
+    DrawTextureTiled(texture, source, dest, origin, rotation, scale, tint);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_DrawTextureQuad(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 5);
     Texture2D texture = *jaylib_gettexture2d(argv, 0);
@@ -697,6 +710,7 @@ static const JanetReg image_cfuns[] = {
     {"draw-texture-pro", cfun_DrawTexturePro, NULL},
     {"draw-texture-quad", cfun_DrawTextureQuad, NULL},
     {"draw-texture-rec", cfun_DrawTextureRec, NULL},
+    {"draw-texture-tiled", cfun_DrawTextureTiled, NULL},
     {"gen-image-color", cfun_GenImageColor, NULL},
     {"gen-image-gradient-v", cfun_GenImageGradientV, NULL},
     {"gen-image-gradient-h", cfun_GenImageGradientH, NULL},
