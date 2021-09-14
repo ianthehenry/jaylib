@@ -903,6 +903,37 @@ static Janet cfun_Fade(int32_t argc, Janet *argv) {
     return jaylib_wrap_color(Fade(color, alpha));
 }
 
+static Janet cfun_BeginBlendMode(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+
+    const uint8_t *kw = janet_getkeyword(argv, 0);
+    int blend_mode = 0;
+    if (!janet_cstrcmp(kw, "alpha")) {
+        blend_mode = BLEND_ALPHA;
+    } else if (!janet_cstrcmp(kw, "additive")) {
+        blend_mode = BLEND_ADDITIVE;
+    } else if (!janet_cstrcmp(kw, "multiplied")) {
+        blend_mode = BLEND_MULTIPLIED;
+    } else if (!janet_cstrcmp(kw, "add-colors")) {
+        blend_mode = BLEND_ADD_COLORS;
+    } else if (!janet_cstrcmp(kw, "subtract-colors")) {
+        blend_mode = BLEND_SUBTRACT_COLORS;
+    } else if (!janet_cstrcmp(kw, "custom")) {
+        blend_mode = BLEND_CUSTOM;
+    } else {
+        janet_panicf("unknown blend mode %v", argv[0]);
+    }
+    BeginBlendMode(blend_mode);
+    return janet_wrap_nil();
+}
+
+static Janet cfun_EndBlendMode(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_fixarity(argc, 0);
+    EndBlendMode();
+    return janet_wrap_nil();
+}
+
 static JanetReg core_cfuns[] = {
     {"init-window", cfun_InitWindow, NULL},
     {"window-should-close", cfun_WindowShouldClose, NULL},
@@ -1003,5 +1034,7 @@ static JanetReg core_cfuns[] = {
     {"color-from-hsv", cfun_ColorFromHSV, NULL},
     {"color-to-hsv", cfun_ColorToHSV, NULL},
     {"fade", cfun_Fade, NULL},
+    {"begin-blend-mode", cfun_BeginBlendMode, NULL},
+    {"end-blend-mode", cfun_EndBlendMode, NULL},
     {NULL, NULL, NULL}
 };
