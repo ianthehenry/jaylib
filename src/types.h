@@ -496,3 +496,33 @@ static const JanetAbstractType AT_Camera3D = {
 static Camera3D *jaylib_getcamera3d(const Janet *argv, int32_t n) {
     return ((Camera3D *)janet_getabstract(argv, n, &AT_Camera3D));
 }
+
+static Vector2 *jaylib_getvec2s(const Janet *argv, int32_t n, int32_t *len) {
+    JanetView view = janet_getindexed(argv, n);
+    Vector2 *mem = janet_smalloc(sizeof(Vector2) * view.len);
+    for (int32_t i = 0; i < view.len; i++) {
+        mem[i] = jaylib_getvec2(view.items, i);
+    }
+    *len = view.len;
+    return mem;
+}
+
+static Vector3 *jaylib_getvec3s(const Janet *argv, int32_t n, int32_t *len) {
+    JanetView view = janet_getindexed(argv, n);
+    Vector3 *mem = janet_smalloc(sizeof(Vector3) * view.len);
+    for (int32_t i = 0; i < view.len; i++) {
+        mem[i] = jaylib_getvec3(view.items, i);
+    }
+    *len = view.len;
+    return mem;
+}
+
+static float *jaylib_getfloats(const Janet *argv, int32_t n, int32_t *len) {
+    JanetView view = janet_getindexed(argv, n);
+    float *mem = janet_smalloc(sizeof(float) * view.len);
+    for (int32_t i = 0; i < view.len; i++) {
+        mem[i] = janet_getnumber(view.items, i);
+    }
+    *len = view.len;
+    return mem;
+}
