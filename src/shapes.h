@@ -55,16 +55,6 @@ static Janet cfun_DrawLineBezier(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
-static Vector2 *jaylib_getvec2s(const Janet *argv, int32_t n, int32_t *len) {
-    JanetView view = janet_getindexed(argv, n);
-    Vector2 *mem = janet_smalloc(sizeof(Vector2) * view.len);
-    for (int32_t i = 0; i < view.len; i++) {
-        mem[i] = jaylib_getvec2(view.items, i);
-    }
-    *len = view.len;
-    return mem;
-}
-
 static Janet cfun_DrawLineStrip(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 2);
     int32_t len;
