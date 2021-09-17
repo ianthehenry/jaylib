@@ -896,6 +896,18 @@ static Janet cfun_ColorToHSV(int32_t argc, Janet *argv) {
     return jaylib_wrap_vec3(ColorToHSV(color));
 }
 
+static Janet cfun_ColorToRGB(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Color color = jaylib_getcolor(argv, 0);
+    return jaylib_wrap_color_rgb(color);
+}
+
+static Janet cfun_ColorToRGBA(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Color color = jaylib_getcolor(argv, 0);
+    return jaylib_wrap_color_rgba(color);
+}
+
 static Janet cfun_Fade(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 2);
     Color color = jaylib_getcolor(argv, 0);
@@ -1033,6 +1045,8 @@ static JanetReg core_cfuns[] = {
     {"set-camera2d-target", cfun_SetCamera2DTarget, NULL},
     {"color-from-hsv", cfun_ColorFromHSV, NULL},
     {"color-to-hsv", cfun_ColorToHSV, NULL},
+    {"color-to-rgb", cfun_ColorToRGB, NULL},
+    {"color-to-rgba", cfun_ColorToRGBA, NULL},
     {"fade", cfun_Fade, NULL},
     {"begin-blend-mode", cfun_BeginBlendMode, NULL},
     {"end-blend-mode", cfun_EndBlendMode, NULL},
