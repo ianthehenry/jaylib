@@ -35,6 +35,16 @@ static Janet cfun_DrawLineV(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_DrawLineGrad(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 4);
+    Vector2 p1 = jaylib_getvec2(argv, 0);
+    Vector2 p2 = jaylib_getvec2(argv, 1);
+    Color c1 = jaylib_getcolor(argv, 2);
+    Color c2 = jaylib_getcolor(argv, 3);
+    DrawLineGrad(p1, p2, c1, c2);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_DrawLineEx(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 4);
     Vector2 p1 = jaylib_getvec2(argv, 0);
@@ -336,6 +346,7 @@ static JanetReg shapes_cfuns[] = {
     {"draw-pixel-v", cfun_DrawPixelV, NULL},
     {"draw-line", cfun_DrawLine, NULL},
     {"draw-line-v", cfun_DrawLineV, NULL},
+    {"draw-line-grad", cfun_DrawLineGrad, NULL},
     {"draw-line-ex", cfun_DrawLineEx, NULL},
     {"draw-line-bezier", cfun_DrawLineBezier, NULL},
     {"draw-line-strip", cfun_DrawLineStrip, NULL},
