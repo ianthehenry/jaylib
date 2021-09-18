@@ -332,6 +332,16 @@ static Vector3 jaylib_getvec3(const Janet *argv, int32_t n) {
     };
 }
 
+static Vector4 jaylib_getvec4(const Janet *argv, int32_t n) {
+    JanetView idx = janet_getindexed(argv, n);
+    return (Vector4) {
+        idx_getfloat(idx, 0),
+        idx_getfloat(idx, 1),
+        idx_getfloat(idx, 2),
+        idx_getfloat(idx, 3)
+    };
+}
+
 static Rectangle jaylib_getrect(const Janet *argv, int32_t n) {
     JanetView idx = janet_getindexed(argv, n);
     return (Rectangle) {
@@ -512,6 +522,16 @@ static Vector3 *jaylib_getvec3s(const Janet *argv, int32_t n, int32_t *len) {
     Vector3 *mem = janet_smalloc(sizeof(Vector3) * view.len);
     for (int32_t i = 0; i < view.len; i++) {
         mem[i] = jaylib_getvec3(view.items, i);
+    }
+    *len = view.len;
+    return mem;
+}
+
+static Vector4 *jaylib_getvec4s(const Janet *argv, int32_t n, int32_t *len) {
+    JanetView view = janet_getindexed(argv, n);
+    Vector4 *mem = janet_smalloc(sizeof(Vector4) * view.len);
+    for (int32_t i = 0; i < view.len; i++) {
+        mem[i] = jaylib_getvec4(view.items, i);
     }
     *len = view.len;
     return mem;
