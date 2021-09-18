@@ -18,6 +18,16 @@ static Janet cfun_DrawCircle3D(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_DrawTriangle3D(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 4);
+    Vector3 a = jaylib_getvec3(argv, 0);
+    Vector3 b = jaylib_getvec3(argv, 1);
+    Vector3 c = jaylib_getvec3(argv, 2);
+    Color color = jaylib_getcolor(argv, 3);
+    DrawTriangle3D(a, b, c, color);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_DrawCube(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 5);
     Vector3 pos = jaylib_getvec3(argv, 0);
@@ -153,6 +163,7 @@ static Janet cfun_DrawRay(int32_t argc, Janet *argv) {
 static JanetReg threed_cfuns[] = {
     {"draw-line-3d", cfun_DrawLine3D, NULL},
     {"draw-circle-3d", cfun_DrawCircle3D, NULL},
+    {"draw-triangle-3d", cfun_DrawTriangle3D, NULL},
     {"draw-cube", cfun_DrawCube, NULL},
     {"draw-cube-v", cfun_DrawCubeV, NULL},
     {"draw-cube-wires", cfun_DrawCubeWires, NULL},
