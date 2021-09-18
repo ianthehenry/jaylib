@@ -17,6 +17,25 @@ static Janet cfun_LoadShader(int32_t argc, Janet *argv) {
     return janet_wrap_abstract(shader);
 }
 
+static Janet cfun_LoadShaderFromMemory(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    const char *vertexShader;
+    if (janet_checktype(argv[0], JANET_NIL)) {
+        vertexShader = NULL;
+    } else {
+        vertexShader = janet_getcstring(argv, 0);
+    }
+    const char *fragmentShader;
+    if (janet_checktype(argv[1], JANET_NIL)) {
+        fragmentShader = NULL;
+    } else {
+        fragmentShader = janet_getcstring(argv, 1);
+    }
+    Shader *shader = janet_abstract(&AT_Shader, sizeof(Shader));
+    *shader = LoadShaderFromMemory(vertexShader, fragmentShader);
+    return janet_wrap_abstract(shader);
+}
+
 static Janet cfun_UnloadShader(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     Shader shader = *jaylib_getshader(argv, 0);
@@ -113,6 +132,7 @@ static Janet cfun_SetShaderValueVFloat(int32_t argc, Janet *argv) {
 
 static const JanetReg shader_cfuns[] = {
     {"load-shader", cfun_LoadShader, NULL},
+    {"load-shader-from-memory", cfun_LoadShaderFromMemory, NULL},
     {"unload-shader", cfun_UnloadShader, NULL},
     {"begin-shader-mode", cfun_BeginShaderMode, NULL},
     {"end-shader-mode", cfun_EndShaderMode, NULL},
