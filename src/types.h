@@ -405,6 +405,13 @@ static Janet jaylib_wrap_vec3(Vector3 x) {
     return janet_wrap_tuple(janet_tuple_end(tup));
 }
 
+static Janet jaylib_wrap_ray(Ray ray) {
+    Janet *tup = janet_tuple_begin(2);
+    tup[0] = jaylib_wrap_vec3(ray.position);
+    tup[1] = jaylib_wrap_vec3(ray.direction);
+    return janet_wrap_tuple(janet_tuple_end(tup));
+}
+
 static Janet jaylib_wrap_color_rgb(Color color) {
     Janet *tup = janet_tuple_begin(3);
     tup[0] = janet_wrap_number((float) color.r / 255.0);
