@@ -648,6 +648,13 @@ static Janet cfun_GetMouseWheelMove(int32_t argc, Janet *argv) {
     return janet_wrap_number(GetMouseWheelMove());
 }
 
+static Janet cfun_GetMouseRay(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Vector2 position = jaylib_getvec2(argv, 0);
+    Camera3D *camera = jaylib_getcamera3d(argv, 1);
+    return jaylib_wrap_ray(GetMouseRay(position, *camera));
+}
+
 static Janet cfun_GetTouchX(int32_t argc, Janet *argv) {
     (void) argv;
     janet_fixarity(argc, 0);
@@ -1018,6 +1025,7 @@ static JanetReg core_cfuns[] = {
     {"set-mouse-offset", cfun_SetMouseOffset, NULL},
     {"set-mouse-scale", cfun_SetMouseScale, NULL},
     {"get-mouse-wheel-move", cfun_GetMouseWheelMove, NULL},
+    {"get-mouse-ray", cfun_GetMouseRay, NULL},
     {"get-touch-x", cfun_GetTouchX, NULL},
     {"get-touch-y", cfun_GetTouchY, NULL},
     {"get-touch-position", cfun_GetTouchPosition, NULL},
