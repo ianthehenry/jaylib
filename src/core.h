@@ -888,6 +888,45 @@ static Janet cfun_SetCamera2DTarget(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_GetCamera3DPosition(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    return jaylib_wrap_vec3(camera->position);
+}
+
+static Janet cfun_SetCamera3DPosition(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    camera->position = jaylib_getvec3(argv, 1);
+    return janet_wrap_nil();
+}
+
+static Janet cfun_GetCamera3DTarget(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    return jaylib_wrap_vec3(camera->target);
+}
+
+static Janet cfun_SetCamera3DTarget(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    camera->target = jaylib_getvec3(argv, 1);
+    return janet_wrap_nil();
+}
+
+static Janet cfun_GetCamera3DUp(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    return jaylib_wrap_vec3(camera->up);
+}
+
+static Janet cfun_SetCamera3DUp(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    camera->up = jaylib_getvec3(argv, 1);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_ColorFromHSV(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 3);
     float h = (float) janet_getnumber(argv, 0);
@@ -1050,6 +1089,12 @@ static JanetReg core_cfuns[] = {
     {"get-world-to-screen-2d", cfun_GetWorldToScreen2D, NULL},
     {"get-screen-to-world-2d", cfun_GetScreenToWorld2D, NULL},
     {"set-camera2d-target", cfun_SetCamera2DTarget, NULL},
+    {"get-camera3d-position", cfun_GetCamera3DPosition, NULL},
+    {"set-camera3d-position", cfun_SetCamera3DPosition, NULL},
+    {"get-camera3d-target", cfun_GetCamera3DTarget, NULL},
+    {"set-camera3d-target", cfun_SetCamera3DTarget, NULL},
+    {"get-camera3d-up", cfun_GetCamera3DUp, NULL},
+    {"set-camera3d-up", cfun_SetCamera3DUp, NULL},
     {"color-from-hsv", cfun_ColorFromHSV, NULL},
     {"color-to-hsv", cfun_ColorToHSV, NULL},
     {"color-to-rgb", cfun_ColorToRGB, NULL},
