@@ -124,6 +124,13 @@ static Janet cfun_SetBlendFactorsSeparate(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_DrawRenderBatchActive(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_fixarity(argc, 0);
+    rlDrawRenderBatchActive();
+    return janet_wrap_nil();
+}
+
 static JanetReg rlgl_cfuns[] = {
     {"enable-depth-test", cfun_EnableDepthTest, NULL},
     {"disable-depth-test", cfun_DisableDepthTest, NULL},
@@ -134,5 +141,6 @@ static JanetReg rlgl_cfuns[] = {
     {"set-blend-factors", cfun_SetBlendFactors, NULL},
     {"set-blend-factors-separate", cfun_SetBlendFactorsSeparate, NULL},
     {"set-reverse-winding", cfun_SetReverseWinding, NULL},
+    {"draw-render-batch-active", cfun_DrawRenderBatchActive, NULL},
     {NULL, NULL, NULL}
 };
