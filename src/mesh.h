@@ -42,6 +42,14 @@ static Janet cfun_SetMaterialTexture(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_SetMaterialShader(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    Material *material = jaylib_getmaterial(argv, 0);
+    Shader *shader = jaylib_getshader(argv, 1);
+    SetMaterialShader(material, *shader);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_GenMeshCube(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 3);
     float width = janet_getnumber(argv, 0);
@@ -56,6 +64,7 @@ static Janet cfun_GenMeshCube(int32_t argc, Janet *argv) {
 static JanetReg mesh_cfuns[] = {
     {"load-material-default", cfun_LoadMaterialDefault, NULL},
     {"set-material-texture", cfun_SetMaterialTexture, NULL},
+    {"set-material-shader", cfun_SetMaterialShader, NULL},
     {"upload-mesh", cfun_UploadMesh, NULL},
     {"mesh-tangents", cfun_MeshTangents, NULL},
     {"draw-mesh", cfun_DrawMesh, NULL},
