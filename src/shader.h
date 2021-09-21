@@ -67,6 +67,36 @@ static Janet cfun_SetShaderValueTexture(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_SetShaderValueInt(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Shader shader = *jaylib_getshader(argv, 0);
+    const char *uniform = janet_getcstring(argv, 1);
+    int location = GetShaderLocation(shader, uniform);
+    int value = janet_getinteger(argv, 2);
+    SetShaderValue(shader, location, &value, SHADER_UNIFORM_INT);
+    return janet_wrap_nil();
+}
+
+static Janet cfun_SetShaderValueBool(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Shader shader = *jaylib_getshader(argv, 0);
+    const char *uniform = janet_getcstring(argv, 1);
+    int location = GetShaderLocation(shader, uniform);
+    int value = janet_getboolean(argv, 2) ? 1 : 0;
+    SetShaderValue(shader, location, &value, SHADER_UNIFORM_INT);
+    return janet_wrap_nil();
+}
+
+static Janet cfun_SetShaderValueFloat(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Shader shader = *jaylib_getshader(argv, 0);
+    const char *uniform = janet_getcstring(argv, 1);
+    int location = GetShaderLocation(shader, uniform);
+    float value = janet_getnumber(argv, 2);
+    SetShaderValue(shader, location, &value, SHADER_UNIFORM_FLOAT);
+    return janet_wrap_nil();
+}
+
 static Janet cfun_SetShaderValueVec2(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 3);
     Shader shader = *jaylib_getshader(argv, 0);
@@ -94,26 +124,6 @@ static Janet cfun_SetShaderValueVec4(int32_t argc, Janet *argv) {
     int location = GetShaderLocation(shader, uniform);
     Vector4 vec = jaylib_getvec4(argv, 2);
     SetShaderValue(shader, location, &vec, SHADER_UNIFORM_VEC4);
-    return janet_wrap_nil();
-}
-
-static Janet cfun_SetShaderValueInt(int32_t argc, Janet *argv) {
-    janet_fixarity(argc, 3);
-    Shader shader = *jaylib_getshader(argv, 0);
-    const char *uniform = janet_getcstring(argv, 1);
-    int location = GetShaderLocation(shader, uniform);
-    int value = janet_getinteger(argv, 2);
-    SetShaderValue(shader, location, &value, SHADER_UNIFORM_INT);
-    return janet_wrap_nil();
-}
-
-static Janet cfun_SetShaderValueFloat(int32_t argc, Janet *argv) {
-    janet_fixarity(argc, 3);
-    Shader shader = *jaylib_getshader(argv, 0);
-    const char *uniform = janet_getcstring(argv, 1);
-    int location = GetShaderLocation(shader, uniform);
-    float value = janet_getnumber(argv, 2);
-    SetShaderValue(shader, location, &value, SHADER_UNIFORM_FLOAT);
     return janet_wrap_nil();
 }
 
@@ -175,6 +185,7 @@ static const JanetReg shader_cfuns[] = {
     {"set-shader-value-v-vec3", cfun_SetShaderValueVVec3, NULL},
     {"set-shader-value-v-vec4", cfun_SetShaderValueVVec4, NULL},
     {"set-shader-value-int", cfun_SetShaderValueInt, NULL},
+    {"set-shader-value-bool", cfun_SetShaderValueBool, NULL},
     {"set-shader-value-float", cfun_SetShaderValueFloat, NULL},
     {"set-shader-value-v-float", cfun_SetShaderValueVFloat, NULL},
     {NULL, NULL, NULL}
