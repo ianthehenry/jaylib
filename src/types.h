@@ -475,6 +475,24 @@ static Shader *jaylib_getshader(const Janet *argv, int32_t n) {
     return ((Shader *)janet_getabstract(argv, n, &AT_Shader));
 }
 
+static const JanetAbstractType AT_Mesh = {
+    "jaylib/mesh",
+    JANET_ATEND_NAME
+};
+
+static Mesh *jaylib_getmesh(const Janet *argv, int32_t n) {
+    return ((Mesh *)janet_getabstract(argv, n, &AT_Mesh));
+}
+
+static const JanetAbstractType AT_Material = {
+    "jaylib/material",
+    JANET_ATEND_NAME
+};
+
+static Material *jaylib_getmaterial(const Janet *argv, int32_t n) {
+    return ((Material *)janet_getabstract(argv, n, &AT_Material));
+}
+
 static const JanetAbstractType AT_Matrix = {
     "jaylib/matrix",
     JANET_ATEND_NAME

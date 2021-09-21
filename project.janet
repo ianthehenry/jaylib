@@ -48,7 +48,8 @@
             "src/3d.h"
             "src/shader.h"
             "src/rlgl.h"
-            "src/math.h"]
+            "src/math.h"
+            "src/mesh.h"]
 
   :lflags [;default-lflags ;lflags])
 

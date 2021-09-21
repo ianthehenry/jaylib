@@ -13,6 +13,7 @@
 #include "shader.h"
 #include "rlgl.h"
 #include "math.h"
+#include "mesh.h"
 
 JANET_MODULE_ENTRY(JanetTable *env) {
     janet_cfuns(env, "jaylib", core_cfuns);
@@ -25,4 +26,5 @@ JANET_MODULE_ENTRY(JanetTable *env) {
     janet_cfuns(env, "jaylib", shader_cfuns);
     janet_cfuns(env, "jaylib", rlgl_cfuns);
     janet_cfuns(env, "jaylib", math_cfuns);
+    janet_cfuns(env, "jaylib", mesh_cfuns);
 }
