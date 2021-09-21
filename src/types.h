@@ -475,6 +475,15 @@ static Shader *jaylib_getshader(const Janet *argv, int32_t n) {
     return ((Shader *)janet_getabstract(argv, n, &AT_Shader));
 }
 
+static const JanetAbstractType AT_Matrix = {
+    "jaylib/matrix",
+    JANET_ATEND_NAME
+};
+
+static Matrix *jaylib_getmatrix(const Janet *argv, int32_t n) {
+    return ((Matrix *)janet_getabstract(argv, n, &AT_Matrix));
+}
+
 static const JanetAbstractType AT_Wave = {
     "jaylib/wave",
     JANET_ATEND_NAME
