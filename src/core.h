@@ -838,6 +838,12 @@ static Janet cfun_Camera3D(int32_t argc, Janet *argv) {
     return janet_wrap_abstract(camera);
 }
 
+static Janet cfun_GetCameraMatrix(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Camera3D *camera = jaylib_getcamera3d(argv, 0);
+    return jaylib_wrap_matrix(GetCameraMatrix(*camera));
+}
+
 static Janet cfun_BeginMode3D(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     Camera3D *camera = jaylib_getcamera3d(argv, 0);
@@ -1302,6 +1308,10 @@ static JanetReg core_cfuns[] = {
         " - :up         = Camera up vector (rotation over its axis) \n"
         " - :fov-y      = Camera field-of-view apperture in Y (degrees) in perspective, used as near plane width in orthographic \n"
         " - :projection = Camera projection: CAMERA\\_PERSPECTIVE or CAMERA\\_ORTHOGRAPHIC \n"
+    },
+    {"get-camera-matrix", cfun_GetCameraMatrix,
+        "(get-camera-matrix camera-3d)\n\n"
+        "Get the 4x4 matrix representing the camera."
     },
     {"update-camera", cfun_UpdateCamera, 
         "(update-camera camera mode)\n\n" 
