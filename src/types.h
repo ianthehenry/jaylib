@@ -487,32 +487,24 @@ static Janet jaylib_wrap_vec4(Vector4 x) {
     return janet_wrap_tuple(janet_tuple_end(tup));
 }
 
-static Janet jaylib_wrap_matrix(Matrix x) {
+static Janet jaylib_wrap_matrix(Matrix mat) {
     Janet *tup = janet_tuple_begin(16);
-    // First row
-    tup[0] = janet_wrap_number(x.m0);
-    tup[1] = janet_wrap_number(x.m4);
-    tup[2] = janet_wrap_number(x.m8);
-    tup[3] = janet_wrap_number(x.m12);
-
-    // Second row
-    tup[4] = janet_wrap_number(x.m1);
-    tup[5] = janet_wrap_number(x.m5);
-    tup[6] = janet_wrap_number(x.m9);
-    tup[7] = janet_wrap_number(x.m13);
-
-    // Third row
-    tup[8] = janet_wrap_number(x.m2);
-    tup[9] = janet_wrap_number(x.m6);
-    tup[10] = janet_wrap_number(x.m10);
-    tup[11] = janet_wrap_number(x.m14);
-
-    // Fourth row
-    tup[12] = janet_wrap_number(x.m3);
-    tup[13] = janet_wrap_number(x.m7);
-    tup[14] = janet_wrap_number(x.m11);
-    tup[15] = janet_wrap_number(x.m15);
-
+    tup[0] = janet_wrap_number(mat.m0);
+    tup[1] = janet_wrap_number(mat.m4);
+    tup[2] = janet_wrap_number(mat.m8);
+    tup[3] = janet_wrap_number(mat.m12);
+    tup[4] = janet_wrap_number(mat.m1);
+    tup[5] = janet_wrap_number(mat.m5);
+    tup[6] = janet_wrap_number(mat.m9);
+    tup[7] = janet_wrap_number(mat.m13);
+    tup[8] = janet_wrap_number(mat.m2);
+    tup[9] = janet_wrap_number(mat.m6);
+    tup[10] = janet_wrap_number(mat.m10);
+    tup[11] = janet_wrap_number(mat.m14);
+    tup[12] = janet_wrap_number(mat.m3);
+    tup[13] = janet_wrap_number(mat.m7);
+    tup[14] = janet_wrap_number(mat.m11);
+    tup[15] = janet_wrap_number(mat.m15);
     return janet_wrap_tuple(janet_tuple_end(tup));
 }
 
