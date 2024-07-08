@@ -383,7 +383,7 @@
 // Shader loading/unloading functions
 [ ] char *LoadText(const char *fileName)
 [x] Shader LoadShader(const char *vsFileName, const char *fsFileName)
-[ ] Shader LoadShaderCode(char *vsCode, char *fsCode)
+[x] Shader LoadShaderCode(char *vsCode, char *fsCode)
 [x] void UnloadShader(Shader shader)
 
 [ ] Shader GetShaderDefault(void)

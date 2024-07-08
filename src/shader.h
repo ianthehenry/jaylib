@@ -17,6 +17,25 @@ static Janet cfun_LoadShader(int32_t argc, Janet *argv) {
     return janet_wrap_abstract(shader);
 }
 
+static Janet cfun_LoadShaderFromMemory(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 2);
+    const char *vertexShaderSource;
+    const char *fragmentShaderSource;
+    if (janet_checktype(argv[0], JANET_NIL)) {
+        vertexShaderSource = NULL;
+    } else {
+        vertexShaderSource = janet_getcbytes(argv, 0);
+    }
+    if (janet_checktype(argv[1], JANET_NIL)) {
+        fragmentShaderSource = NULL;
+    } else {
+        fragmentShaderSource = janet_getcbytes(argv, 1);
+    }
+    Shader *shader = janet_abstract(&AT_Shader, sizeof(Shader));
+    *shader = LoadShaderFromMemory(vertexShaderSource, fragmentShaderSource);
+    return janet_wrap_abstract(shader);
+}
+
 static Janet cfun_UnloadShader(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
     Shader *shader = jaylib_getshader(argv, 0);
@@ -93,6 +112,10 @@ static JanetReg shader_cfuns[] = {
     {"load-shader", cfun_LoadShader,
         "(loader-shader vertex-shader fragment-shader)\n\n"
         "Load shader from files and bind default locations"
+    },
+    {"load-shader-from-memory", cfun_LoadShaderFromMemory,
+        "(loader-shader-from-memory vertex-shader fragment-shader)\n\n"
+        "Load shader from strings and bind default locations"
     },
     {"unload-shader", cfun_UnloadShader,
         "(unloader-shader shader)\n\n"
