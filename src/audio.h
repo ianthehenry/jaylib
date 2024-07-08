@@ -40,7 +40,7 @@ static Janet cfun_SetMasterVolume(int32_t argc, Janet *argv) {
 
 static Janet cfun_LoadWave(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
-    const char *fileName = janet_getcstring(argv, 0);
+    const char *fileName = janet_getcbytes(argv, 0);
     Wave *wave = janet_abstract(&AT_Wave, sizeof(Wave));
     *wave = LoadWave(fileName);
     return janet_wrap_abstract(wave);
@@ -58,7 +58,7 @@ static Janet cfun_IsWaveReady(int32_t argc, Janet *argv) {
 
 static Janet cfun_LoadSound(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
-    const char *fileName = janet_getcstring(argv, 0);
+    const char *fileName = janet_getcbytes(argv, 0);
     Sound *sound = janet_abstract(&AT_Sound, sizeof(Sound));
     *sound = LoadSound(fileName);
     return janet_wrap_abstract(sound);
@@ -99,7 +99,7 @@ static Janet cfun_UnloadSound(int32_t argc, Janet *argv) {
 static Janet cfun_ExportWave(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 2);
     Wave wave = *jaylib_getwave(argv, 0);
-    const char *fileName = janet_getcstring(argv, 1);
+    const char *fileName = janet_getcbytes(argv, 1);
     ExportWave(wave, fileName);
     return janet_wrap_nil();
 }
@@ -107,7 +107,7 @@ static Janet cfun_ExportWave(int32_t argc, Janet *argv) {
 static Janet cfun_ExportWaveAsCode(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 2);
     Wave wave = *jaylib_getwave(argv, 0);
-    const char *fileName = janet_getcstring(argv, 1);
+    const char *fileName = janet_getcbytes(argv, 1);
     ExportWaveAsCode(wave, fileName);
     return janet_wrap_nil();
 }
@@ -172,7 +172,7 @@ static Janet cfun_WaveCopy(int32_t argc, Janet *argv) {
 
 static Janet cfun_LoadMusicStream(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
-    const char *fileName = janet_getcstring(argv, 0);
+    const char *fileName = janet_getcbytes(argv, 0);
     Music *music = janet_abstract(&AT_Music, sizeof(Music));
     *music = LoadMusicStream(fileName);
     return janet_wrap_abstract(music);
@@ -180,7 +180,7 @@ static Janet cfun_LoadMusicStream(int32_t argc, Janet *argv) {
 
 static Janet cfun_LoadMusicStreamFromMemory(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 3);
-    const char *fileType = janet_getcstring(argv, 0);
+    const char *fileType = janet_getcbytes(argv, 0);
     const unsigned char *data = jaylib_getunsignedcstring(argv, 1);
     int dataSize = janet_getinteger(argv, 2);
     Music *music = janet_abstract(&AT_Music, sizeof(Music));

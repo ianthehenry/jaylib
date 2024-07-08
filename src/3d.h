@@ -328,7 +328,7 @@ static Janet cfun_GenMeshCubicmap(int32_t argc, Janet *argv) {
 
 static Janet cfun_LoadMaterials(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
-    const char *fileName = janet_getcstring(argv, 0);
+    const char *fileName = janet_getcbytes(argv, 0);
     int materialCount;
     Material *materials = LoadMaterials(fileName, &materialCount);
     JanetArray *array = janet_array(materialCount);
@@ -390,7 +390,7 @@ static Janet cfun_SetModelMeshMaterial(int32_t argc, Janet *argv) {
 
 static Janet cfun_LoadModel(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
-    const char *fileName = janet_getcstring(argv, 0);
+    const char *fileName = janet_getcbytes(argv, 0);
     Model *model = janet_abstract(&AT_Model, sizeof(Model));
     *model = LoadModel(fileName);
     return janet_wrap_abstract(model);
@@ -434,7 +434,7 @@ static Janet cfun_GetModelBoundingBox(int32_t argc, Janet *argv) {
 static Janet cfun_ExportMesh(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 2);
     Mesh *mesh = jaylib_getmesh(argv, 0);
-    const char *fileName = janet_getcstring(argv, 1);
+    const char *fileName = janet_getcbytes(argv, 1);
     bool success = ExportMesh(*mesh, fileName);
     return janet_wrap_boolean(success);
 }
@@ -456,7 +456,7 @@ static Janet cfun_UnloadMesh(int32_t argc, Janet *argv) {
 
 static Janet cfun_LoadModelAnimations(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 1);
-    const char *fileName = janet_getcstring(argv, 0);
+    const char *fileName = janet_getcbytes(argv, 0);
     unsigned int animCount;
     ModelAnimation *anims = LoadModelAnimations(fileName, &animCount);
     JanetArray *array = janet_array(animCount);

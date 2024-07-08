@@ -5,12 +5,12 @@ static Janet cfun_LoadShader(int32_t argc, Janet *argv) {
     if (janet_checktype(argv[0], JANET_NIL)) {
         vertexShaderFileName = NULL;
     } else {
-        vertexShaderFileName = janet_getcstring(argv, 0);
+        vertexShaderFileName = janet_getcbytes(argv, 0);
     }
     if (janet_checktype(argv[1], JANET_NIL)) {
         fragmentShaderFileName = NULL;
     } else {
-        fragmentShaderFileName = janet_getcstring(argv, 1);
+        fragmentShaderFileName = janet_getcbytes(argv, 1);
     }
     Shader *shader = janet_abstract(&AT_Shader, sizeof(Shader));
     *shader = LoadShader(vertexShaderFileName, fragmentShaderFileName);
