@@ -108,6 +108,24 @@ static Janet cfun_SetShaderValue(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_SetShaderValueMatrix(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Shader *shader = jaylib_getshader(argv, 0);
+    int locIndex = janet_getinteger(argv, 1);
+    Matrix matrix = jaylib_getmatrix(argv, 2);
+    SetShaderValueMatrix(*shader, locIndex, matrix);
+    return janet_wrap_nil();
+}
+
+static Janet cfun_SetShaderValueTexture(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Shader *shader = jaylib_getshader(argv, 0);
+    int locIndex = janet_getinteger(argv, 1);
+    Texture2D *texture = jaylib_gettexture2d(argv, 2);
+    SetShaderValueTexture(*shader, locIndex, *texture);
+    return janet_wrap_nil();
+}
+
 static JanetReg shader_cfuns[] = {
     {"load-shader", cfun_LoadShader,
         "(loader-shader vertex-shader fragment-shader)\n\n"
@@ -136,6 +154,14 @@ static JanetReg shader_cfuns[] = {
     {"set-shader-value", cfun_SetShaderValue,
         "(set-shader-value shader loc-index value uniform-type)\n\n"
         "Set shader uniform value"
+    },
+    {"set-shader-value-matrix", cfun_SetShaderValueMatrix,
+        "(set-shader-value-matrix shader loc-index matrix)\n\n"
+        "Set 4x4 matrix shader uniform"
+    },
+    {"set-shader-value-texture", cfun_SetShaderValueTexture,
+        "(set-shader-value-matrix shader loc-index texture)\n\n"
+        "Set sampler2d shader uniform"
     },
     {NULL, NULL, NULL}
 };
