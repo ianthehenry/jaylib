@@ -57,6 +57,31 @@ static Janet cfun_ImageDimensions(int32_t argc, Janet *argv) {
     return janet_wrap_tuple(janet_tuple_n(dim, 2));
 }
 
+// assumes R32 format
+static Janet cfun_ImagePeekFloat(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    Image image = *jaylib_getimage(argv, 0);
+    int x = janet_getinteger(argv, 1);
+    int y = janet_getinteger(argv, 2);
+    float value = ((float *)image.data)[y * image.width + x];
+    return janet_wrap_number(value);
+}
+
+// assumes R32 format
+static Janet cfun_ImageData(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 1);
+    Image image = *jaylib_getimage(argv, 0);
+    int float_count = image.width * image.height;
+    JanetArray *result = janet_array(float_count);
+    result-> count = float_count;
+    Janet *data = result->data;
+
+    for (int i = 0; i < float_count; i++) {
+      data[i] = janet_wrap_number(((float *)image.data)[i]);
+    }
+    return janet_wrap_array(result);
+}
+
 static Janet cfun_ExportImage(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 2);
     Image image = *jaylib_getimage(argv, 0);
@@ -130,6 +155,16 @@ static Janet cfun_LoadRenderTexture(int32_t argc, Janet *argv) {
     int height = janet_getinteger(argv, 1);
     RenderTexture *texture = janet_abstract(&AT_RenderTexture, sizeof(RenderTexture));
     *texture = LoadRenderTexture(width, height);
+    return janet_wrap_abstract(texture);
+}
+
+static Janet cfun_LoadRenderTextureCustom(int32_t argc, Janet *argv) {
+    janet_fixarity(argc, 3);
+    int width = janet_getinteger(argv, 0);
+    int height = janet_getinteger(argv, 1);
+    int format = janet_getinteger(argv, 2);
+    RenderTexture *texture = janet_abstract(&AT_RenderTexture, sizeof(RenderTexture));
+    *texture = LoadRenderTextureCustom(width, height, format);
     return janet_wrap_abstract(texture);
 }
 
@@ -754,6 +789,10 @@ static const JanetReg image_cfuns[] = {
         "(load-render-texture width height)\n\n"
         "Load texture for rendering (framebuffer)"
     },
+    {"load-render-texture-custom", cfun_LoadRenderTextureCustom,
+        "(load-render-texture width height pixel-format)\n\n"
+        "Load texture for rendering (framebuffer)"
+    },
     {"render-texture-ready?", cfun_IsRenderTextureReady,
         "(render-texture-ready? texture)\n\n"
         "Check if a render texture is ready"
@@ -841,6 +880,14 @@ static const JanetReg image_cfuns[] = {
     {"image-dimensions", cfun_ImageDimensions, 
         "(image-dimensions image)\n\n"
         "Get image dimensions"
+    },
+    {"image-peek-float", cfun_ImagePeekFloat,
+        "(image-peek-float image x y)\n\n"
+        "Get image color (vec4)"
+    },
+    {"image-data", cfun_ImageData,
+        "(image-data image x y)\n\n"
+        "Get image color (vec4)"
     },
     {"image-dither", cfun_ImageDither, 
         "(image-dither image r-bpp g-bpp b-bpp a-bpp)\n\n"
