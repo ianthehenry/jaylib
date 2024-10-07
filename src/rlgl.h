@@ -133,6 +133,13 @@ static Janet cfun_rlDrawRenderBatchActive(int32_t argc, Janet *argv) {
     return janet_wrap_nil();
 }
 
+static Janet cfun_rlFinish(int32_t argc, Janet *argv) {
+    (void) argv;
+    janet_fixarity(argc, 0);
+    rlFinish();
+    return janet_wrap_nil();
+}
+
 static JanetReg rlgl_cfuns[] = {
     {"rl-viewport", cfun_rlViewport, NULL},
     {"rl-matrix-mode", cfun_rlMatrixMode, NULL},
@@ -147,5 +154,6 @@ static JanetReg rlgl_cfuns[] = {
     {"rl-scissor", cfun_rlScissor, NULL},
     {"rl-mult-matrixf-screen-scale", cfun_rlMultMatrixfScreenScale, NULL},
     {"rl-draw-render-batch-active", cfun_rlDrawRenderBatchActive, NULL},
+    {"rl-finish", cfun_rlFinish, NULL},
     {NULL, NULL, NULL}
 };
