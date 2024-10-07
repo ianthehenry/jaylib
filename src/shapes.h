@@ -1,3 +1,5 @@
+#include <OpenGL/gl3.h>
+
 static Janet cfun_DrawPixel(int32_t argc, Janet *argv) {
     janet_fixarity(argc, 3);
     int posX = janet_getinteger(argv, 0);
@@ -460,6 +462,17 @@ static Janet cfun_GetCollisionRec(int32_t argc, Janet *argv) {
     return janet_wrap_tuple(janet_tuple_end(tup));
 }
 
+static Janet cfun_DrawRenderBatchActive(int32_t argc, Janet *argv) {
+  janet_fixarity(argc, 0);
+  rlDrawRenderBatchActive();
+  return janet_wrap_nil();
+}
+static Janet cfun_Finish(int32_t argc, Janet *argv) {
+  janet_fixarity(argc, 0);
+  glFinish();
+  return janet_wrap_nil();
+}
+
 static JanetReg shapes_cfuns[] = {
     {"draw-pixel", cfun_DrawPixel, 
         "(draw-pixel pos-x pos-y color)\n\n"
@@ -625,6 +638,14 @@ static JanetReg shapes_cfuns[] = {
     {"get-collision-rec", cfun_GetCollisionRec, 
         "(get-collision-rec rec1 rec2)\n\n"
         "Get collision rectangle for two rectangles collision"
+    },
+    {"draw-render-batch-active", cfun_DrawRenderBatchActive,
+        "(draw-render-batch-active)\n\n"
+        "Flush Raylib's internal draw buffers"
+    },
+    {"finish", cfun_Finish,
+        "(finish)\n\n"
+        "actually call glFinish"
     },
     {NULL, NULL, NULL}
 };
